@@ -4,8 +4,8 @@ const http = require('https');
 const AWS = require('aws-sdk');
 const ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-10-08', region: 'us-east-1'});
 
-const ddbTableName = FIXME; // Copy DynamoDB table name here, for example, 'AlienCards-1201c610'
-const cfDomainName = FIXME; // Copy CloudFront domain name here, for example, 'd1dienny4yhppe.cloudfront.net';
+const ddbTableName = "AlienCards-21208d10"; // Copy DynamoDB table name here, for example, 'AlienCards-1201c610'
+const cfDomainName = "d3lsr8657kvjc3.cloudfront.net"; // Copy CloudFront domain name here, for example, 'd1dienny4yhppe.cloudfront.net';
 const pathIndxTmpl = '/templates/index.html';
 
 exports.handler = (event, context, callback) => {
@@ -23,7 +23,7 @@ exports.handler = (event, context, callback) => {
         const tmpl = responses[0];
         const data = responses[1];
 
-        let html = tmpl;
+        let html = tmpl + '<h1>my custom addition -alejandro</h1>';
         for (let i = 0; i < data.length; i++) {
             const n = i + 1;
             html = html

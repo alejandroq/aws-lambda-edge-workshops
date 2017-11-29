@@ -4,8 +4,8 @@ const http = require('https');
 const AWS = require('aws-sdk');
 const ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-10-08', region: 'us-east-1'});
 
-const ddbTableName = FIXME; // Copy DynamoDB table name here, for example, 'AlienCards-1201c610'
-const cfDomainName = FIXME; // Copy CloudFront domain name here, for example, 'd1dienny4yhppe.cloudfront.net';
+const ddbTableName = "AlienCards-21208d10"; // Copy DynamoDB table name here, for example, 'AlienCards-1201c610'
+const cfDomainName = "d3lsr8657kvjc3.cloudfront.net"; // Copy CloudFront domain name here, for example, 'd1dienny4yhppe.cloudfront.net';
 const pathCardTmpl = '/templates/card.html';
 
 // The generated page contains some dynamic data, so we don't want
@@ -16,6 +16,18 @@ exports.handler = (event, context, callback) => {
     console.log('Event: ', JSON.stringify(event, null, 2));
     console.log('Context: ', JSON.stringify(context, null, 2));
     const request = event.Records[0].cf.request;
+
+    const redirects = {
+        '/music':    '/card/bcbd2481',
+        '/tree':     '/card/da8398f4',
+        '/food':     '/card/e51c848c',
+        '/computer': '/card/fe2f80a7',
+        '/cat':      '/card/k9b430fc',
+        '/beer':     '/card/vc7efa69',
+    };
+    if (request.uri in redirects) {
+        request.uri = redirects[request.uri];
+    }
 
     // Get Id from URI (pass through if failed to parse)
     const m = request.uri.match(/^\/card\/([a-z0-9]+)$/i);
